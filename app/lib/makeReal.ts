@@ -1,6 +1,22 @@
 import { Editor, createShapeId, getSvgAsImage } from '@tldraw/tldraw'
 import { PreviewShape } from '../PreviewShape/PreviewShape'
-import { getHtmlFromOpenAI } from './getHtmlFromOpenAI'
+// import { getHtmlFromOpenAI } from './getHtmlFromOpenAI'
+
+async function callToHtmlApi(image, html, apiKey) {
+    const response = await fetch('/api/toHtml/route', { // Adjust the path if necessary
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image, html, apiKey }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Network response was not ok ' + response.statusText);
+    }
+
+    return await response.json();
+}
 
 export async function makeReal(editor: Editor, apiKey: string) {
 	const newShapeId = createShapeId()
@@ -58,30 +74,40 @@ export async function makeReal(editor: Editor, apiKey: string) {
 	})
 
 	try {
-		const json = await getHtmlFromOpenAI({
-			image: dataUrl,
-			html: previousHtml,
-			apiKey,
-		})
-
+		// Call the API route
+		const response = await fetch('/api/toHtml/route', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				image: dataUrl,
+				html: previousHtml,
+				apiKey,
+			}),
+		});
+	
+		const json = await response.json();
+	
 		if (json.error) {
-			throw Error(`${json.error.message?.slice(0, 100)}...`)
+			throw new Error(`${json.error.message?.slice(0, 100)}...`);
 		}
-
-		const message = json.choices[0].message.content
-		const start = message.indexOf('<!DOCTYPE html>')
-		const end = message.indexOf('</html>')
-		const html = message.slice(start, end + '</html>'.length)
-
+	
+		const message = json.choices[0].message.content;
+		const start = message.indexOf('<!DOCTYPE html>');
+		const end = message.indexOf('</html>');
+		const html = message.slice(start, end + '</html>'.length);
+	
 		editor.updateShape<PreviewShape>({
 			id: newShapeId,
 			type: 'preview',
 			props: { html, source: dataUrl as string },
-		})
+		});
 	} catch (e) {
-		editor.deleteShape(newShapeId)
-		throw e
+		editor.deleteShape(newShapeId);
+		throw e;
 	}
+	
 }
 
 export function blobToBase64(blob: Blob): Promise<string> {
