@@ -55,9 +55,9 @@ export async function getHtmlFromOpenAI({
 	}
 
 	let json = null
-	if (!process.env.OPENAI_API_KEY) {
-		throw Error('Check env variables, OPENAI_API_KEY not set')
-	}
+	// if (!process.env.OPENAI_API_KEY) {
+	// 	throw Error('Check env variables, OPENAI_API_KEY not set')
+	// }
 	try {
 		const resp = await fetch('https://api.openai.com/v1/chat/completions', {
 			method: 'POST',
