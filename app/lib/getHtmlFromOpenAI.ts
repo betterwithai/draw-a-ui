@@ -61,7 +61,7 @@ export async function getHtmlFromOpenAI({
 
 	if (!openAIKey) {
 		console.log('No OPENAI_API_KEY environment variable found, using provided key')
-		console.log('Provided env: ', process.env)
+		console.log('Provided env sanity check (username): ', process.env.BASIC_AUTH_USERNAME)
 		if (!apiKey) {
 			throw new Error('No API key provided in env or ui, please enter your key!');
 		} else {

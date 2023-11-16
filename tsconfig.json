@@ -20,7 +20,9 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "types": ["node", "environment"] // Add 'environment' here
   },
   "include": [
     "next-env.d.ts",
