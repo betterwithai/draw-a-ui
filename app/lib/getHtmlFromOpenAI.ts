@@ -12,7 +12,16 @@ Use creative license to make the application more fleshed out.
 Use JavaScript modules and unkpkg to import any necessary dependencies.
 
 Respond ONLY with the contents of the html file.`
-
+declare var process: {
+	env: {
+	  NODE_ENV: string;
+	  OPENAI_API_KEY: string;
+	  BASIC_AUTH_USERNAME: string;
+	  BASIC_AUTH_PASSWORD: string;
+	  // ... include other environment variables as needed
+	}
+  }
+  
 
 export async function getHtmlFromOpenAI({
 	image,
