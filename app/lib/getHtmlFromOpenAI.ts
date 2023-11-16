@@ -13,6 +13,15 @@ Use JavaScript modules and unkpkg to import any necessary dependencies.
 
 Respond ONLY with the contents of the html file.`
 
+declare var global: {
+    myConfig: {
+        openAIKey: string;
+    }
+}
+
+const openAIKey = global.myConfig.openAIKey;
+
+
 export async function getHtmlFromOpenAI({
 	image,
 	html,
@@ -57,7 +66,7 @@ export async function getHtmlFromOpenAI({
 	let json = null
 	let used_api_key;
 
-	if (!process.env.OPENAI_API_KEY) {
+	if (!openAIKey) {
 		console.log('No OPENAI_API_KEY environment variable found, using provided key')
 		if (!apiKey) {
 			throw new Error('No API key provided in env or ui, please enter your key!');
@@ -65,7 +74,7 @@ export async function getHtmlFromOpenAI({
 			used_api_key = apiKey;
 		}
 	} else {
-		used_api_key = process.env.OPENAI_API_KEY;
+		used_api_key = openAIKey;
 	}
 	
 
