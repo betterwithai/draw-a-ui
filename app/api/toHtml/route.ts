@@ -138,7 +138,7 @@ export type GPT4VCompletionRequest = {
 }
 
 // API route handler
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function (req: NextApiRequest, res: NextApiResponse) {
     // Check if it's a POST request
     if (req.method !== 'POST') {
         res.status(405).end(); // Method Not Allowed
