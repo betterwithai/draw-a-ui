@@ -1,22 +1,5 @@
 import { Editor, createShapeId, getSvgAsImage } from '@tldraw/tldraw'
 import { PreviewShape } from '../PreviewShape/PreviewShape'
-// import { getHtmlFromOpenAI } from './getHtmlFromOpenAI'
-
-async function callToHtmlApi(image, html, apiKey) {
-    const response = await fetch('/api/toHtml/route', { // Adjust the path if necessary
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image, html, apiKey }),
-    });
-
-    if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
-    }
-
-    return await response.json();
-}
 
 export async function makeReal(editor: Editor, apiKey: string) {
 	const newShapeId = createShapeId()

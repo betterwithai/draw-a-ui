@@ -8,7 +8,6 @@ import React from 'react'
 import { PreviewShapeUtil } from './PreviewShape/PreviewShape'
 import { ExportButton } from './components/ExportButton'
 import { useBreakpoint } from '@tldraw/tldraw'
-import { APIKeyInput } from './components/APIKeyInput'
 
 const Tldraw = dynamic(async () => (await import('@tldraw/tldraw')).Tldraw, {
 	ssr: false,
@@ -21,7 +20,6 @@ export default function Home() {
 		<>
 			<div className={'tldraw__editor'}>
 				<Tldraw persistenceKey="tldraw" shapeUtils={shapeUtils} shareZone={<ExportButton />}>
-					<APIKeyInput />
 					<LockupLink />
 				</Tldraw>
 			</div>
