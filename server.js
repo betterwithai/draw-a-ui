@@ -6,11 +6,6 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-global.myConfig = {
-    openAIKey: process.env.OPENAI_API_KEY
-};
-
-
 const basicAuthCheck = (req, res, next) => {
     const user = auth(req);
     const USERNAME = process.env.BASIC_AUTH_USERNAME;
